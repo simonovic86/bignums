@@ -1,7 +1,6 @@
-```markdown
 # Bignums Library
 
-The `bignums` library provides utility functions for performing arithmetic operations on big numbers of various types, including `*big.Int` and `*big.Float`, in Go programming language. It provides a fluent API to chain operations and perform complex calculations with big numbers seamlessly.
+The `bignums` library provides utility functions for performing arithmetic operations on big numbers in Go programming language. It provides a fluent API to chain operations and perform complex calculations with big numbers seamlessly.
 
 ## Features
 
@@ -13,7 +12,7 @@ The `bignums` library provides utility functions for performing arithmetic opera
 ## Installation
 
 ```shell
-go get <your-library-path>/bignums
+go get githuv.com/simonovic86/bignums
 ```
 
 ## Usage
@@ -85,4 +84,3 @@ If you want to contribute, feel free to open a pull request. For major changes, 
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
