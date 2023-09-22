@@ -59,7 +59,7 @@ package main
 
 import (
     "fmt"
-    "<your-library-path>/bignums"
+    "github.com/simonovic86/bignums"
 )
 
 func main() {
