@@ -93,6 +93,29 @@ func TestBigIntChain_MismatchedBrackets(t *testing.T) {
 	}
 }
 
+func TestBigIntChain_Pow(t *testing.T) {
+	chain := NewBigIntChain(2).Pow(3) // 2^3 = 8
+	val, err := chain.Value()
+
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+
+	expected := big.NewInt(8)
+	if val.Cmp(expected) != 0 {
+		t.Fatalf("Expected %v, got %v", expected, val)
+	}
+}
+
+func TestBigIntChain_PowInvalidExponent(t *testing.T) {
+	chain := NewBigIntChain(2).Pow(-2) // Negative exponent
+	_, err := chain.Value()
+
+	if err == nil || err.Error() != "exponent too large" { // Adjusted expected error message
+		t.Fatalf("Expected exponent too large error, got %v", err)
+	}
+}
+
 func TestBigFloatChain_BasicOperations(t *testing.T) {
 	chain := NewBigFloatChain(10.5).Add(20.5).Subtract(10).Multiply(2).Divide(2)
 	val, err := chain.Value()
@@ -214,6 +237,36 @@ func TestBigFloatChain_MismatchedBrackets(t *testing.T) {
 
 	if err == nil || err.Error() != "mismatched brackets" {
 		t.Fatalf("Expected mismatched brackets error, got %v", err)
+	}
+}
+
+func TestBigFloatChain_Pow(t *testing.T) {
+	chain := NewBigFloatChain(2.5).Pow(2) // 2.5^2 = 6.25
+	val, err := chain.Value()
+
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+
+	expected := big.NewFloat(6.25)
+	if val.Cmp(expected) != 0 {
+		t.Fatalf("Expected %v, got %v", expected, val)
+	}
+}
+
+func TestBigFloatChain_PowInvalidExponent(t *testing.T) {
+	chain := NewBigFloatChain(2.5).Pow(-2) // Negative exponent
+	_, err := chain.Value()
+
+	if err == nil || err.Error() != "negative exponent" {
+		t.Fatalf("Expected negative exponent error, got %v", err)
+	}
+
+	chain = NewBigFloatChain(2.5).Pow(2.5) // Non-integer exponent
+	_, err = chain.Value()
+
+	if err == nil || err.Error() != "non-integer exponent" {
+		t.Fatalf("Expected non-integer exponent error, got %v", err)
 	}
 }
 

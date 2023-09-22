@@ -4,6 +4,7 @@ package bignums
 
 import (
 	"fmt"
+	"math"
 	"math/big"
 	"reflect"
 	"strings"
@@ -59,6 +60,31 @@ func (bc *BigIntChain) Divide(val interface{}) *BigIntChain {
 		}
 		return new(big.Int).Div(a, b)
 	})
+}
+
+func (bc *BigIntChain) Mod(val interface{}) *BigIntChain {
+	return bc.operate(val, func(a, b *big.Int) *big.Int {
+		if b.Cmp(big.NewInt(0)) == 0 {
+			bc.err = fmt.Errorf("modulo by zero")
+			return a
+		}
+		return new(big.Int).Mod(a, b)
+	})
+}
+
+func (bc *BigIntChain) Pow(val interface{}) *BigIntChain {
+	return bc.operate(val, func(a, b *big.Int) *big.Int {
+		if uint64(b.Int64()) > uint64(64) {
+			bc.err = fmt.Errorf("exponent too large")
+			return a
+		}
+		return new(big.Int).Exp(a, b, nil)
+	})
+}
+
+func (bc *BigIntChain) Abs() *BigIntChain {
+	bc.value = new(big.Int).Abs(bc.value)
+	return bc
 }
 
 func (bc *BigIntChain) operate(val interface{}, operation func(*big.Int, *big.Int) *big.Int) *BigIntChain {
@@ -132,6 +158,33 @@ func (bfc *BigFloatChain) Divide(val interface{}) *BigFloatChain {
 		}
 		return new(big.Float).Quo(a, b)
 	})
+}
+
+func (bfc *BigFloatChain) Pow(val interface{}) *BigFloatChain {
+	return bfc.operate(val, func(a, b *big.Float) *big.Float {
+		// Convert b to float64 for the exponent.
+		exponent, _ := b.Float64()
+
+		if exponent < 0 {
+			bfc.err = fmt.Errorf("negative exponent")
+			return a
+		}
+
+		if exponent != float64(int64(exponent)) {
+			bfc.err = fmt.Errorf("non-integer exponent")
+			return a
+		}
+
+		base, _ := a.Float64()
+
+		// Use math.Pow to calculate power and then convert it back to *big.Float
+		return new(big.Float).SetFloat64(math.Pow(base, exponent))
+	})
+}
+
+func (bfc *BigFloatChain) Abs() *BigFloatChain {
+	bfc.value = new(big.Float).Abs(bfc.value)
+	return bfc
 }
 
 func (bfc *BigFloatChain) operate(val interface{}, operation func(*big.Float, *big.Float) *big.Float) *BigFloatChain {
