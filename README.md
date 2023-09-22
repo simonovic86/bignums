@@ -48,9 +48,11 @@ Retrieve the final results post-operation:
 
 ```go
 value, err := resultChain.Value()
+
 if err != nil {
-log.Fatalf("Error occurred: %v", err)
+  log.Fatalf("Error occurred: %v", err)
 }
+
 fmt.Println("Result: ", value)
 ```
 
@@ -62,21 +64,21 @@ For a better understanding, here are some practical examples demonstrating the v
 package main
 
 import (
-"fmt"
-"github.com/simonovic86/bignums"
+  "fmt"
+  "github.com/simonovic86/bignums"
 )
 
 func main() {
-chain := bignums.NewBigIntChain(10)
-resultChain := chain.Add(5).Subtract(2).Multiply(3).Divide(2) // ((10 + 5 - 2) * 3) / 2
+  chain := bignums.NewBigIntChain(10)
+  resultChain := chain.Add(5).Subtract(2).Multiply(3).Divide(2) // ((10 + 5 - 2) * 3) / 2
 
-    value, err := resultChain.Value()
-    if err != nil {
-        fmt.Println("Error occurred:", err)
-        return
-    }
+  value, err := resultChain.Value()
+  if err != nil {
+    fmt.Println("Error occurred:", err)
+     return
+  }
 
-    fmt.Println("Result:", value)
+  fmt.Println("Result:", value)
 }
 ```
 
