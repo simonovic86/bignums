@@ -1,6 +1,6 @@
 # :abacus: Bignums Library
 
-The `bignums` library is a highly sophisticated toolkit, meticulously designed for developers to perform arithmetic computations on extensive numerical values with ease and precision. Developed in the versatile Go programming language, it specializes in handling big numeric types, namely `*big.Int` and `*big.Float`. It presents a fluent and cohesive API, enabling the chaining of operations seamlessly and allowing for sophisticated calculations with enhanced readability and maintainability.
+The `bignums` library is a toolkit, meticulously designed for developers to perform arithmetic computations on extensive numerical values with ease and precision. Developed in the versatile Go programming language, it specializes in handling big numeric types, namely `*big.Int` and `*big.Float`. It presents a fluent and cohesive API, enabling the chaining of operations seamlessly and allowing for sophisticated calculations with enhanced readability and maintainability.
 
 ## :star2: Key Features
 
